@@ -4,12 +4,12 @@
     </div>
 
     <div class="box">
-      <% for (let i = 0; i < newListItems.length; i++) { %>
-      <div class="item">
-        <input type="checkbox" />
-        <p><%= newListItems[i] %></p>
+       <% newListItems.forEach(item => { %>
+          <div class="item">
+          <input type="checkbox" />
+          <p><%= item.name %></p>
+        <% }); %>
       </div>
-      <% } %>
 
       <form class="" action="/" method="post">
         <input type="text" name="newItem" placeholder="New Item" autocomplete="off" />

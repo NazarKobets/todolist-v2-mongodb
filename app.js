@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const date = require(__dirname + '/date.js');
+// const dotenv = require("dotenv");
+
+// dotenv.config();
+
 
 const app = express();
 
@@ -10,12 +13,42 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
-mongoose.connect('mongodb://localhost:27017/todolistDB');
+// mongoose.connect('mongodb://localhost:27017/todolistDB');
+
+mongoose.connect('mongodb://localhost:27017/todolistDB',{ useNewUrlParser: true });
+
+const itemsSchema = {
+    name: String
+};
+
+const Item = mongoose.model('Item', itemsSchema);
+
+const item1 = new Item ({
+    name: 'Welcome to your Todolist!'
+});
+
+const item2 = new Item ({
+    name: 'This is your todolist'
+});
+
+item1.save();
+item2.save();
+
+
+const defaultItems = [item1, item2];
+
+// Item.insertMany(defaultItems, (err) => {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log('You\'ve succesfully started the db');
+//     }
+// });
 
 app.get('/', (req, res) => {
-    const day = date.getDate();
-
-    res.render('list', {listTitle: day, newListItems: items});
+    Item.find({item1, item2}, (err, results) => {
+        res.render('list', {listTitle: 'Today', newListItems: foundItems});
+    });
 });
 
 
@@ -38,7 +71,7 @@ app.get('/work', (req, res) => {
 
 app.post('/work', (req, res) => {
     const item = req.body.newItem;
-    items.push(item);
+    // items.push(item);
     res.redirect('/work');
 });
 
