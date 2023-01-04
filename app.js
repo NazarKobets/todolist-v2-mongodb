@@ -1,21 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-// const dotenv = require("dotenv");
-
-// dotenv.config();
-
 
 const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+mongoose.set('strictQuery', true);
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// mongoose.connect('mongodb://localhost:27017/todolistDB');
-
-mongoose.connect('mongodb://localhost:27017/todolistDB',{ useNewUrlParser: true });
+mongoose.connect('mongodb+srv://admin-nazar:cRU42_6TGvi9%cL@cluster0.vqdimzy.mongodb.net/todolistDB');
 
 const itemsSchema = {
     name: String
@@ -35,7 +31,7 @@ item1.save();
 item2.save();
 
 
-const defaultItems = [item1, item2];
+const defaultItems = [item1, item2, item3];
 
 // Item.insertMany(defaultItems, (err) => {
 //     if (err) {
